@@ -104,8 +104,12 @@ examples/*
 !examples/gcp-cloud-run/**
 !examples/docs-reference-project
 !examples/docs-reference-project/**
+!examples/superframes-walkthrough
+!examples/superframes-walkthrough/**
 # …but never the local smoke run's build/render artifacts.
 examples/gcp-cloud-run/scripts/gcp-smoke-artifacts/
+examples/superframes-walkthrough/**/.hyperframes/
+examples/superframes-walkthrough/out/
 packages/studio/data/
 
 .desloppify/
@@ -131,6 +135,10 @@ packages/studio/data/
 !.claude/skills/seam-craft
 !.claude/skills/captions-overlay
 !.claude/skills/oversized-cursor
+!.claude/skills/superframes-edit
+!.claude/skills/superframes-build
+!.claude/skills/superframes-cut
+!.claude/skills/superframes-acquire
 
 .agents/*
 !.agents/skills
@@ -142,6 +150,10 @@ packages/studio/data/
 !.agents/skills/seam-craft
 !.agents/skills/captions-overlay
 !.agents/skills/oversized-cursor
+!.agents/skills/superframes-edit
+!.agents/skills/superframes-build
+!.agents/skills/superframes-cut
+!.agents/skills/superframes-acquire
 skills-lock.json
 
 # Skills from other PRs (not managed here)

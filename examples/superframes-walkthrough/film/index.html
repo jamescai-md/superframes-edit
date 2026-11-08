@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      html, body { margin:0; width:1920px; height:1080px; overflow:hidden; background:#101820; }
+      #root { position:relative; width:100%; height:100%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="9"
+         data-width="1920" data-height="1080">
+      <div id="intro" data-composition-id="intro" data-composition-src="compositions/intro.html"
+           data-start="0" data-duration="3" data-track-index="1" data-track-kind="graphics"
+           data-width="1920" data-height="1080"></div>
+      <div id="body" data-composition-id="body" data-composition-src="compositions/body.html"
+           data-start="3" data-duration="3" data-track-index="1" data-track-kind="graphics"
+           data-width="1920" data-height="1080"></div>
+      <div id="outro" data-composition-id="outro" data-composition-src="compositions/outro.html"
+           data-start="6" data-duration="3" data-track-index="1" data-track-kind="graphics"
+           data-width="1920" data-height="1080"></div>
+      <audio id="bed" src="assets/bed.wav" data-start="0" data-duration="9"></audio>
+    </div>
+    <script>
+      // The root is a composition too: it must register its own (possibly empty) timeline,
+      // or `check` fails with missing_timeline_registry.
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>
