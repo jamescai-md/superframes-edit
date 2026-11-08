@@ -179,6 +179,9 @@ launch-video*/
 !skills/launch-video/
 ab-test/
 compositions/
+# …but a composition inside a shipped example is authored source, not a scratch build.
+!examples/superframes-walkthrough/**/compositions/
+!examples/superframes-walkthrough/**/compositions/**
 video-6-2-patched/
 claude-design-hyperframes-video/
 # Per-site video work at the repo root (huly-*, raycast-*, etc.)

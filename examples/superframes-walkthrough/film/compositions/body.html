@@ -1,0 +1,14 @@
+<template>
+  <style>
+    #root { position:absolute; inset:0; background:#f0e6d2; display:grid; place-items:center; }
+    .h { color:#101820; font:600 96px/1.05 -apple-system, "Helvetica Neue", Arial, sans-serif; }
+  </style>
+  <div id="root" data-composition-id="body" data-width="1920" data-height="1080"><h2 class="h clip" id="h2" data-start="0.1" data-duration="2.7">one pipeline — build · cut · verify</h2></div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#h2", { clipPath:"inset(0 0 100% 0)" }, { clipPath:"inset(0 0 0% 0)", duration:0.42, ease:"power3.out" }, 0.1);
+    tl.to("#h2", { opacity:0, duration:0.25, ease:"power2.in" }, 2.75);
+    window.__timelines["body"] = tl;
+  </script>
+</template>
