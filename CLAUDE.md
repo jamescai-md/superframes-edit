@@ -1,48 +1,65 @@
-# Hyperframes
+# SuperFrames Edit
 
-Open-source video rendering framework: write HTML, render video.
+One skill for the whole AI video pipeline. A fork of HeyGen's HyperFrames that merges Remotion,
+FFmpeg and yt-dlp into a single contract: build the video as code, animate it, cut and mix it,
+download and measure references, verify it frame by frame, and export delivery masters.
 
 ## Skills
 
-This repo ships 9 AI agent skills via [vercel-labs/skills](https://github.com/vercel-labs/skills). Install them before writing compositions — they encode framework-specific patterns that generic docs don't cover. **Default to the core set** (`/hyperframes`, `/hyperframes-cli`, `/hyperframes-registry`, `/media-use`); `/slideshow`, `/remotion-to-hyperframes`, `/reverse-any-video`, `/style-sampling` and `/figma` install on demand. Install all 9 only when the user explicitly asks for the full set.
+Thirteen published skills. Install them before writing a composition — they encode framework
+specifics that generic documentation does not cover. The four `superframes-*` skills are the entry
+points; the rest are the HyperFrames set they coordinate.
 
 ```bash
-npx hyperframes skills update                         # default: installs/refreshes the core set plus anything already installed
-npx hyperframes skills                                # all 9 published skills at once — only on explicit request
-npx skills add heygen-com/hyperframes                 # interactive picker; internal skills require INSTALL_INTERNAL_SKILLS=1 for discovery
-npx skills add heygen-com/hyperframes --all           # excludes internal skills unless INSTALL_INTERNAL_SKILLS=1
-npx skills add heygen-com/hyperframes --skill <name>  # a named match installs regardless of metadata.internal (bare name, no leading slash)
+claude plugin marketplace add jamescai-md/superframes-edit
+claude plugin install superframes-edit@superframes-edit
+claude plugin details superframes-edit                     # confirm the inventory
 ```
 
-> **Warning:** Never run `npx skills add ... --all` from inside a HyperFrames checkout: it selects the OpenClaw target, whose `skills/` directory is the repo's own `skills/`, and removes each existing `skills/<name>` destination before linking. A fresh clone restores tracked source, but uncommitted work under `skills/` does not recover. Run it from an empty directory or from your own project root. This happens regardless of `metadata.internal`.
+Reload the session (or `/reload-plugins`) after installing or updating. Skills are namespaced:
+`/superframes-edit:superframes-edit`. To let the marketplace auto-update, run `/plugin` in Claude
+Code's terminal UI, open **Marketplaces**, select **superframes-edit**, and enable auto-update.
 
-`skills add` resolves the skills.sh registry blob, which can lag `main` by hours, so a freshly added skill may be a little behind. `npx hyperframes skills update` installs the skills from the release tag that matches the CLI version, so they match the CLI that runs them.
+Other agents: `npx skills add jamescai-md/superframes-edit`, or
+`gemini extensions install https://github.com/jamescai-md/superframes-edit`.
 
-Make any video by asking for it; the `/hyperframes` skill carries the render contract and the references (format, runtimes, motion, look, captions, film, overlays, storyboards). The skills carry knowledge, not process. The README skills section mirrors this list; keep them in sync (see "Skill catalog maintenance" below).
+- `superframes-edit` — **read first** for any video request. Holds the contract, the seven stages,
+  the routing table and the failure playbook.
+- `superframes-build` — build as code: HyperFrames (HTML/CSS/GSAP) or Remotion (React/TSX), with
+  the Remotion corpus vendored in `skills/superframes-build/references/remotion/`.
+- `superframes-cut` — the FFmpeg stage as tested subcommands: trim, concat, mix, normalise, speed,
+  captions, delivery encodes, plus `references/ffmpeg-notes.md`.
+- `superframes-acquire` — yt-dlp downloads, access walls, `provenance.sh`, `analyze.sh`, plus
+  `references/ytdlp-notes.md`.
+- `hyperframes` — the authoring contract and the film, motion, look, captions and story references.
+- `hyperframes-cli` — the CLI by job, and recovery from build or render failures.
+- `hyperframes-registry` — about 450 ready-made blocks and components, installed as editable source.
+- `media-use` — music, SFX, images, logos, voice, avatars, transcripts, grades, audio mixing.
+- `slideshow` — a navigable deck, not an MP4.
+- `remotion-to-hyperframes` — migrate Remotion, Motion Canvas, Lottie or Three.js into HTML.
+- `reverse-any-video` — rebuild any video file as an editable project.
+- `style-sampling` — new episodes in one of five proven styles.
+- `figma` — rendered assets, brand tokens, components and storyboard frames as reconstructed motion.
 
-- `/hyperframes` — read first for any request to make, edit, animate or render a video, motion graphic, captions or overlays with HyperFrames (HTML rendered to video). Holds the render contract and the work loop, and points to the references for format, motion, look, captions, whole films and storyboards.
-- `/hyperframes-cli` — the HyperFrames CLI by job: scaffold, check, look at frames, edit the timeline, preview, render locally or in the cloud, publish, project history; plus reading its JSON and recovering from build or render failures.
-- `/hyperframes-registry` — about 450 ready-made blocks and components installed as editable source: transitions, overlays, titles, kinetic type, captions, charts, maps, 3D, camera moves. Use before hand-building any named visual; also for `hyperframes add` and `catalog`.
-- `/media-use` — get or make any media for a video (music, sound effects, images, icons, logos, voiceover, avatar and generated video, transcripts, cutouts, colour grades and looks) with HeyGen or free local tools, and mix placed audio. Also for footage that looks dark, flat or dull, or should be stylized or hidden.
-- `/figma` — bring Figma into a video: rendered assets, brand tokens, components, storyboard frames as reconstructed motion, shaders and connector-assisted motion. Use when the person pastes a figma.com link or asks to use a Figma design, frame, logo or brand.
-- `/slideshow` — a presentation, pitch deck or interactive deck with discrete slides, fragment reveals, branching, hotspot navigation and presenter mode with speaker notes; also converts an existing page into a deck. Output is a navigable deck, not a rendered MP4.
-- `/remotion-to-hyperframes` — bring existing video code or footage into HyperFrames (Remotion first; also Motion Canvas, Lottie, Three.js, canvas, or renders from other tools) and verify it frame by frame against the original.
-- `/reverse-any-video` — rebuild any video file as an editable HyperFrames project (motion graphics, talking heads, live action or AI-generated footage) and check the render against the original frame by frame. A HyperFrames Pro feature.
-- `/style-sampling` — make a new episode on your topic in one of five proven styles (Collage Explainer, Finance Explainer, Animated Science Explainer, 3D Brand Explainer, 3D True Crime). A HyperFrames Pro feature.
+Make any video by asking for it. The request routes through `superframes-edit`; do not start a
+stage without reading its reference.
 
-## Skill catalog maintenance
+## The pipeline
 
-When adding a new skill, or substantially renaming / repurposing an existing one, update all agent-facing discoverability surfaces in lockstep:
+Seven stages with exit conditions: intake → acquire → analyse → build → motion → cut and mix →
+verify → deliver. The stage table with what each one requires and what it must produce lives in
+`skills/superframes-edit/SKILL.md`.
 
-1. The skill list above (CLAUDE.md) AND the skill list in the root `AGENTS.md` AND the `## Skills` section in `README.md` AND `docs/guides/skills.mdx` (rendered at [hyperframes.heygen.com/guides/skills](https://hyperframes.heygen.com/guides/skills)) AND the two setup pages that compress the same descriptions — `docs/prompting/overview.mdx` ("One-time setup") and `docs/quickstart.mdx`. Out-of-date entries silently kill discovery. This list is also the sync set for a **changed contract**, not just an added or renamed skill: a reworded `description:` has to be pushed to every surface or the compressed copies start asserting the opposite of the skill.
-2. The scaffolded project template `packages/cli/src/templates/_shared/CLAUDE.md` + `AGENTS.md` — written into every `hyperframes init` project, so a stale entry there ships to users. The two template files must stay byte-identical.
-3. The routing surface for "make a video" requests is the References table and closing line of `skills/hyperframes/SKILL.md`. A new reference or skill that a request should reach gets a row or a mention there.
-4. Keep the same grouping on every surface: the core set (`/hyperframes`, `/hyperframes-cli`, `/hyperframes-registry`, `/media-use`) first, then the on-demand skills (`/figma`, `/slideshow`, `/remotion-to-hyperframes`, `/reverse-any-video`).
-5. Skill count appears in the README and CLAUDE.md intro lines ("8 AI agent skills…") — update on add/remove. The `docs/guides/skills.mdx` page and the CLI templates deliberately omit a count to avoid drift; keep them count-free.
+## Before the first command on a new machine
 
-The skill's own `SKILL.md` frontmatter `description:` is the source of truth for the one-line "use when" blurb; copy from there into the catalog rather than paraphrasing.
+```bash
+bash skills/superframes-edit/scripts/superframes/doctor.sh
+```
 
-## Build & Test
+Required: Node 22+, `ffmpeg`, `ffprobe`. Optional: `yt-dlp`, Chrome, a HeyGen sign-in. A missing
+required track blocks the job; a missing optional one routes around it.
+
+## Build and test this repository
 
 ```bash
 bun install     # Install dependencies (NOT pnpm — do not create pnpm-lock.yaml)
@@ -50,59 +67,59 @@ bun run build   # Build all packages
 bun run test    # Run all tests
 ```
 
-### Linting & Formatting
+Packages load each other through their `exports`. Under Node, core, parsers, lint and studio-server
+resolve to `dist/`, and player always loads its built bundle. Run `bun run build` once in a fresh
+worktree, before any package's tests or typecheck. After editing a package that another package
+imports, run that package's `build` again before the dependent package's tests. Core's
+`src/generated/` is git-ignored build output: if you see
+`Cannot find module '../generated/runtime-inline'`, run `bun run build:hyperframes-runtime`.
+
+One file: `bun run --cwd packages/<pkg> test <path>`. Each package's `test` script picks its runner
+(vitest in most, `bun test` in aws-lambda and gcp-cloud-run). Producer is the exception: a file that
+imports `bun:test` runs with `bun test <file>`, any other with `bunx vitest run <file>`. Root
+`scripts/*.test.mjs` run through `bun run test:scripts`, which is an explicit list in `package.json`.
+CI's test-reachability check fails any test file that no runner reaches.
+
+### The skills gate
+
+Any change to a skill must pass all three, and so must a pull request:
+
+```bash
+node scripts/superframes-verify/verify-skills.mjs   # frontmatter, names, descriptions, paths, scripts, mirror
+node scripts/superframes-verify/check-clean.mjs     # no credentials, env files or build output
+node scripts/superframes-verify/gen-manifest.mjs    # refresh skills-manifest.json (--check in CI)
+```
+
+`verify-skills.mjs` enforces the rules that matter: one malformed `SKILL.md` aborts `skills add` for
+the whole repo, a description over 320 B is installed on every turn forever, a backtick span
+containing `!` or `>word` makes Claude Code refuse to load the skill, and `.claude/skills` and
+`.agents/skills` must mirror byte for byte.
+
+Per-skill size budgets live in `scripts/check-core-skills.mjs`, which also checks that every
+`npx hyperframes <command>` a core skill names is actually registered by the CLI.
+
+### Linting and formatting
 
 Uses **oxlint** and **oxfmt** (not eslint, not prettier, not biome).
 
 ```bash
 node_modules/.bin/oxlint <files>        # Lint
 node_modules/.bin/oxfmt <files>         # Format
-node_modules/.bin/oxfmt --check <files> # Check formatting (CI / pre-commit)
 ```
 
-Always lint and format changed files before committing. Lefthook pre-commit hooks enforce this automatically.
+## Skill catalogue maintenance
 
-### Composition Validation
+When adding, renaming or substantially repurposing a skill, update every discoverability surface in
+lockstep, because an out-of-date entry silently kills discovery:
 
-After creating or editing any `.html` composition:
+1. The skill list in this file, the list in `CLAUDE.md`, and the tables in `README.md` and
+   `skills/superframes-edit/SKILL.md`.
+2. The size budget in `scripts/check-core-skills.mjs`, if the skill is named there.
+3. `skills-manifest.json`, via `node scripts/superframes-verify/gen-manifest.mjs`.
+4. The mirrors: `cp -r skills/<name> .claude/skills/<name>` and `.agents/skills/<name>`.
 
-```bash
-npx hyperframes lint       # Static HTML structure check
-npx hyperframes check      # Browser gate (headless Chrome — runtime errors, layout, motion, WCAG contrast)
-```
+## Provenance discipline
 
-Both must pass before previewing or considering work complete.
-
-## Project Structure
-
-```
-packages/
-  cli/                  → hyperframes CLI (create, preview, lint, render)
-  core/                 → Types, parsers, generators, linter, runtime, frame adapters
-  engine/               → Seekable page-to-video capture engine (Puppeteer + FFmpeg)
-  player/               → Embeddable <hyperframes-player> web component
-  producer/             → Full rendering pipeline (capture + encode + audio mix)
-  shader-transitions/   → WebGL shader transitions for compositions
-  studio/               → Browser-based composition editor UI (read packages/studio/AGENTS.md first)
-registry/
-  blocks/               → Installable sub-composition scenes (50+)
-  components/           → Installable effects and snippets
-  examples/             → Starter project templates
-docs/                   → Mintlify documentation site (hyperframes.heygen.com)
-skills/                 → AI agent skill definitions
-```
-
-## Key Conventions
-
-- **Package manager**: bun (not pnpm, not npm for workspace operations)
-- **Commit format**: Conventional commits (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`)
-- **TypeScript**: Avoid `any` and `as T` assertions. Prefer type guards and narrowing.
-- **Compositions**: HTML files with `data-*` attributes. Clips need `class="clip"`. Register one paused GSAP root timeline per composition on `window.__timelines`. Scene timelines manually added to that root must not be paused, or they will not advance when the root is seeked.
-- **Frame Adapters**: Animation runtimes plug in via the seek-by-frame adapter pattern. GSAP is the primary adapter.
-- **Deterministic rendering**: No `Date.now()`, no unseeded `Math.random()`, no render-time network fetches.
-- **Docs ship with the change**: a PR that adds or changes a CLI command, flag, or user-visible behavior updates `docs/` in the same PR. A new command also goes in "Find your command" in `docs/packages/cli.mdx` (CI checks it).
-
-## Documentation
-
-- Docs: https://hyperframes.heygen.com/introduction
-- Catalog (50+ blocks): https://hyperframes.heygen.com/catalog/blocks/data-chart
+This repository merges four upstream projects. Anything added must be credited in
+`THIRD_PARTY_NOTICES.md` with its licence. Do not vendor code under a licence that forbids it, and
+do not describe a derived skill as original work.

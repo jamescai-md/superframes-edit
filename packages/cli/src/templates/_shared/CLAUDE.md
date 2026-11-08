@@ -8,9 +8,15 @@ MP4.
 
 **Invoke the relevant skill before writing or modifying compositions.** Skills encode framework-specific patterns (e.g., `window.__timelines` registration, `data-*` attribute semantics, shader-compatible CSS rules) that generic web docs don't cover, so compositions written without them break.
 
-**Doing anything with HyperFrames?** Start at `/hyperframes`. Make any video by asking for it; the `/hyperframes` skill carries the contract and the references (each kind of film, story, motion, look, sound, review, captions, overlays). Read it first, especially when there's no project context to orient you.
+**Doing anything with a video?** Start at `/superframes-edit`. It is the router for the whole
+pipeline — intake, reference acquisition, build, motion, cut and mix, verification, delivery — and it
+names the file to read for each stage.
 
-- `/hyperframes` — read first for any request to make, edit, animate or render a video, motion graphic, captions or overlays. Holds the render contract and the work loop.
+- `/superframes-edit` — read first for any request to make, edit, animate, cut, verify or deliver a video. Holds the contract, the seven stages, the routing table and the failure playbook.
+- `/superframes-build` — build the film as code: HyperFrames HTML/CSS/GSAP, or Remotion React (the Remotion corpus is vendored in the skill).
+- `/superframes-cut` — FFmpeg: frame-exact trims, safe concatenation, loudness normalisation, voice ducking, delivery encodes.
+- `/superframes-acquire` — yt-dlp reference downloads, access walls, provenance, reference analysis.
+- `/hyperframes` — the HyperFrames authoring contract and the film, motion, look, captions and story references.
 - `/hyperframes-cli` — the CLI by job: scaffold, check, look at frames, edit the timeline, preview, render, publish, project history.
 - `/hyperframes-registry` — ready-made blocks and components installed as editable source. Search it before hand-building any named visual.
 - `/media-use` — get or make any media (music, sound effects, images, voiceover, avatar and generated video, transcripts, cutouts, colour grades) and mix placed audio.
@@ -18,8 +24,16 @@ MP4.
 - `/slideshow` — a presentation or pitch deck. Output is a navigable deck, not a rendered MP4.
 - `/remotion-to-hyperframes` — bring existing video code or footage into HyperFrames (Remotion first; also Motion Canvas, Lottie, Three.js, canvas, or renders from other tools) and verify it frame by frame against the original.
 - `/reverse-any-video` — rebuild any video file as an editable HyperFrames project and check it against the original frame by frame (HyperFrames Pro).
-- `/style-sampling` — make a new episode on your topic in one of five proven styles (HyperFrames Pro).
+- `/style-sampling` — make a new episode in one of five proven styles.
 
+**Before the first command, and after the last edit**, this project's two gates:
+
+```bash
+bash .claude/skills/superframes-edit/scripts/superframes/doctor.sh   # what this machine can do
+bash .claude/skills/superframes-edit/scripts/superframes/verify.sh out.mp4 --expect-duration <n> --audio
+```
+
+Nothing ships on a claim. A check that could not run is a disclosure, never a pass.
 **Changing how real footage or images look or reveal?** Load `/media-use` and read its `references/media-treatments.md` before editing, even when the request only says dark, flat, boring, retro, private, or “make the reveal cooler.” It governs how footage is treated, never whether media may be used. Use canonical media treatments and seek-safe motion; do not improvise equivalent CSS/SVG filters or overlays.
 
 > **Tailwind v4 projects** (`hyperframes init --tailwind`): see `hyperframes-cli/references/init-and-scaffold.md` (Tailwind).

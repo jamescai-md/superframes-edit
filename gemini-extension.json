@@ -1,5 +1,5 @@
 {
-  "name": "hyperframes",
-  "version": "0.9.23",
-  "description": "HyperFrames by HeyGen. Write HTML, render video. Compositions, GSAP and runtime adapter animations, captions, voiceovers, audio-reactive visuals, and website capture for HyperFrames."
+  "name": "superframes-edit",
+  "version": "1.0.0",
+  "description": "SuperFrames Edit \u2014 one skill for the whole AI video pipeline. Build the film as code (HyperFrames HTML or Remotion React), animate motion graphics, cut and mix with FFmpeg, download and analyse references with yt-dlp, verify frame by frame, and export delivery masters. Merges HeyGen HyperFrames, Remotion, FFmpeg and yt-dlp into one contract."
 }

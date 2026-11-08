@@ -1,11 +1,11 @@
-# Contributing to Hyperframes
+# Contributing to SuperFrames Edit
 
-Thanks for your interest in contributing to Hyperframes! This guide will help you get started.
+Thanks for your interest in contributing to SuperFrames Edit. This guide will help you get started.
 
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/hyperframes.git`
+2. Clone your fork: `git clone https://github.com/YOUR_USERNAME/superframes-edit.git`
 3. Install dependencies: `bun install`
 4. Create a branch: `git checkout -b my-feature`
 
@@ -17,11 +17,54 @@ can overlap `skills/` and overwrite uncommitted changes. The repo-native skills 
 
 ## Choosing work
 
-Start with [available newcomer issues](https://github.com/heygen-com/hyperframes/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22+no%3Aassignee) or [help-wanted issues](https://github.com/heygen-com/hyperframes/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22+no%3Aassignee). Read the discussion and check existing PRs before starting; an unassigned issue may already have work in progress. Comment with your intended approach and coordinate a claim with a maintainer.
+Start with [available newcomer issues](https://github.com/jamescai-md/superframes-edit/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) or [help-wanted issues](https://github.com/jamescai-md/superframes-edit/issues?q=is%3Aissue+is%3Aopen+label%3A%22help+wanted%22). Read the discussion and check existing PRs before starting; an unassigned issue may already have work in progress. Comment with your intended approach and coordinate a claim with a maintainer.
 
-`difficulty/easy`, `difficulty/medium`, and `difficulty/hard` describe the work. `triage/ready` means the scope is accepted; `help wanted` means it is available. A `good first issue` also has a testing path and a maintainer willing to help. See [TRIAGE.md](TRIAGE.md) for the full definitions and ways to discover useful issues yourself.
+`difficulty/easy`, `difficulty/medium`, and `difficulty/hard` describe the work. `triage/ready` means the scope is accepted; `help wanted` means it is available. A `good first issue` also has a testing path and a maintainer willing to help. Label a reproducible bug with the failing command and the `doctor.sh` output.
 
 Discuss substantial features, public API/runtime changes, and changes to defaults before implementing them. Existing accepted scope does not need another approval. Tiny self-contained corrections can go directly into a PR with the problem and verification explained.
+
+## The one rule for skill changes
+
+Every change to anything under `skills/`, `.claude/skills/` or `.agents/skills/` must pass the
+repo's own gate before a pull request:
+
+```bash
+node scripts/superframes-verify/verify-skills.mjs
+node scripts/superframes-verify/check-clean.mjs
+node scripts/superframes-verify/gen-manifest.mjs
+```
+
+What that gate is protecting you from:
+
+| Rule | Why it is not negotiable |
+| --- | --- |
+| Valid YAML frontmatter with `name` and `description` | one malformed `SKILL.md` aborts `skills add` for the entire repo |
+| Description at or under 320 bytes | every installed description is listed on every agent turn |
+| No `!` or `>word` inside inline backticks | Claude Code reads those as history expansion and redirection, and refuses to load the skill |
+| Every backticked path resolves | a broken pointer silently sends an agent to a file that is not there |
+| `.claude/skills` and `.agents/skills` match byte for byte | one agent silently ships a stale skill otherwise |
+| Shell scripts pass `bash -n` and are executable | a skill that ships a broken script is worse than no skill |
+
+After editing a skill, re-mirror it and refresh the manifest:
+
+```bash
+cp -r skills/<name> .claude/skills/<name> && cp -r skills/<name> .agents/skills/<name>
+node scripts/superframes-verify/gen-manifest.mjs
+```
+
+## Adding a merged tool
+
+If you wire in another video tool (a renderer, a codec wrapper, a caption engine), it needs:
+
+1. A stage skill named `superframes-<job>` with the same shape as its siblings: frontmatter, a
+   "before the first command" check, a job table, the failures and their fixes, and a "where to read next".
+2. A row in the stage table of `skills/superframes-edit/SKILL.md` and in its failure playbook.
+3. An entry in `THIRD_PARTY_NOTICES.md` with the upstream URL and licence.
+4. A tested script under `scripts/superframes/` if it involves more than two flags.
+5. A size budget in `scripts/check-core-skills.mjs`.
+
+A tool that cannot be verified must not be merged. The whole premise of this repo is that a claim
+without a check is not a delivery.
 
 ## Development
 
@@ -216,7 +259,7 @@ bun run release:prepare 0.2.0        # drafts release notes and stops for review
 git push origin release/v0.2.0       # push the branch, not the local tag
 ```
 
-Open a PR from `release/v0.2.0` to `main`. When it merges, the publish workflow tags the merge commit, publishes every package to npm and creates the GitHub Release. Pushing a stable tag by hand publishes nothing: the workflow only accepts pre-release tags. The full procedure, including recovery from a failed publish, is in [docs/contributing/changelog-process.mdx](docs/contributing/changelog-process.mdx).
+Open a PR from `release/v0.2.0` to `main`. When it merges, the publish workflow tags the merge commit, publishes every package to npm and creates the GitHub Release. Pushing a stable tag by hand publishes nothing: the workflow only accepts pre-release tags. This fork does not publish packages to npm; the upstream procedure applies only if you fork back.
 
 `set-version` also refuses to tag if a **higher** semver tag already exists (a stale higher tag would hijack tag-sorting installers like `npx skills`). Delete the stray tag (`git tag -d <tag> && git push origin :refs/tags/<tag>`) or, only if intentional, pass `--skip-monotonicity-check`.
 
@@ -248,7 +291,7 @@ bun run set-version 0.2.0 --no-tag   # updates package.json files only
 
 ## Reporting Issues
 
-- Use [GitHub Issues](https://github.com/heygen-com/hyperframes/issues) for bug reports and feature requests
+- Use [GitHub Issues](https://github.com/jamescai-md/superframes-edit/issues) for bug reports and feature requests
 - Search existing issues before creating a new one
 - Include reproduction steps for bugs
 

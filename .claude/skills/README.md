@@ -55,3 +55,22 @@ normal `npx skills add` discovery and from `npx skills add ... --all`. A named
 `metadata.internal`; no environment variable is needed. `INSTALL_INTERNAL_SKILLS=1`
 opts internal skills into normal discovery and bulk installation. This does not
 change local agent discovery.
+
+## SuperFrames Edit (this fork's own skills)
+
+This fork adds four skills that are also published to the marketplace, so they exist in both
+namespaces on purpose — repo-native here, installable from `skills/`:
+
+- `superframes-edit` — the router: contract, seven stages, routing, failure playbook
+- `superframes-build` — HyperFrames HTML or Remotion React, with the Remotion corpus vendored
+- `superframes-cut` — FFmpeg subcommands plus field notes
+- `superframes-acquire` — yt-dlp, provenance ledger, reference analysis
+
+They are byte-identical to their `skills/` counterparts; `scripts/check-skill-mirror.mjs` enforces
+that. If you edit one, re-mirror it:
+
+```bash
+cp -r skills/superframes-edit .claude/skills/superframes-edit
+cp -r skills/superframes-edit .agents/skills/superframes-edit
+node scripts/superframes-verify/gen-manifest.mjs
+```

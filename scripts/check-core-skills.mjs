@@ -23,6 +23,13 @@ export const CORE_SKILLS = {
   "remotion-to-hyperframes": 5312,
   "reverse-any-video": 5312,
   "style-sampling": 5312,
+  // SuperFrames Edit: the merged set. Budgets are the same per-entry discipline as
+  // the core skills — the router is largest because it holds the contract and the
+  // stage table; each stage skill stays a menu, not a manual.
+  "superframes-edit": 7936,
+  "superframes-build": 7360,
+  "superframes-cut": 6144,
+  "superframes-acquire": 6144,
 };
 
 /** @param {string} skill */

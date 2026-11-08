@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 240" width="960" height="240" role="img" aria-label="SuperFrames Edit">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0b0c"/>
+      <stop offset="1" stop-color="#161a22"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f4f1ea"/>
+      <stop offset="1" stop-color="#8fb4ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="240" rx="18" fill="url(#g1)"/>
+  <!-- film strip motif: one frame per pipeline stage -->
+  <g opacity="0.85">
+    <rect x="72" y="96" width="26" height="26" rx="3" fill="#2a2f3a"/>
+    <rect x="110" y="96" width="26" height="26" rx="3" fill="#343b49"/>
+    <rect x="148" y="96" width="26" height="26" rx="3" fill="#3f4859"/>
+    <rect x="186" y="96" width="26" height="26" rx="3" fill="#4b5568"/>
+    <rect x="224" y="96" width="26" height="26" rx="3" fill="#586379"/>
+    <rect x="262" y="96" width="26" height="26" rx="3" fill="#67738c"/>
+    <rect x="300" y="96" width="26" height="26" rx="3" fill="#8fb4ff"/>
+  </g>
+  <text x="72" y="82" font-family="Inter, ui-sans-serif, system-ui, -apple-system, sans-serif"
+        font-size="46" font-weight="700" letter-spacing="-1.2" fill="url(#g2)">SuperFrames Edit</text>
+  <text x="72" y="160" font-family="Inter, ui-sans-serif, system-ui, -apple-system, sans-serif"
+        font-size="17" font-weight="500" fill="#9aa3b2">
+    build · animate · cut · verify · deliver — one skill
+  </text>
+  <text x="72" y="190" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="13" fill="#5f6a7d">HyperFrames · Remotion · FFmpeg · yt-dlp</text>
+</svg>

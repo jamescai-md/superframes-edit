@@ -1,31 +1,17 @@
 {
-  "name": "hyperframes",
+  "name": "superframes-edit",
   "owner": {
-    "name": "HeyGen",
-    "email": "hyperframes@heygen.com",
-    "url": "https://hyperframes.heygen.com"
+    "name": "jamescai-md",
+    "url": "https://github.com/jamescai-md/superframes-edit"
   },
+  "description": "SuperFrames Edit \u2014 the combined AI video editing skill set.",
   "plugins": [
     {
-      "name": "hyperframes",
+      "name": "superframes-edit",
       "source": "./",
-      "description": "Recommended: all published HyperFrames skills in one versioned bundle. Create and render videos from HTML: the contract, film, captions, overlays, motion and look references, the CLI, the registry, media, Figma, slideshows and Remotion ports.",
-      "homepage": "https://hyperframes.heygen.com",
+      "description": "Every SuperFrames skill in one versioned bundle: the router, the build tracks, the FFmpeg stage, reference acquisition, and the verification gate.",
+      "homepage": "https://github.com/jamescai-md/superframes-edit",
       "license": "Apache-2.0"
-    },
-    {
-      "name": "core-skills",
-      "source": "./",
-      "description": "Legacy core-only installation. For the release-managed bundle of every skill, install hyperframes@hyperframes and then uninstall core-skills@hyperframes.",
-      "homepage": "https://hyperframes.heygen.com",
-      "license": "Apache-2.0",
-      "skills": [
-        "./skills/hyperframes",
-        "./skills/hyperframes-cli",
-        "./skills/hyperframes-registry",
-        "./skills/media-use"
-      ]
     }
-  ],
-  "description": "HyperFrames video creation skills, versioned and updated as one plugin."
+  ]
 }

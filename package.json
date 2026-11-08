@@ -1,9 +1,9 @@
 {
-  "name": "hyperframes-monorepo",
+  "name": "superframes-edit",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/heygen-com/hyperframes"
+    "url": "https://github.com/jamescai-md/superframes-edit"
   },
   "workspaces": [
     "packages/*"
@@ -100,5 +100,7 @@
   },
   "engines": {
     "bun": "1.4.4"
-  }
+  },
+  "description": "SuperFrames Edit \u2014 one agent skill for the whole AI video pipeline: build, animate, cut, verify, deliver.",
+  "license": "Apache-2.0"
 }

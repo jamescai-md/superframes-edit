@@ -1,14 +1,27 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
-  "name": "hyperframes",
-  "description": "HyperFrames by HeyGen. Write HTML, render video. Compositions, GSAP and runtime adapter animations, captions, voiceovers, audio-reactive visuals, and website capture for HyperFrames.",
-  "version": "0.9.23",
+  "name": "superframes-edit",
+  "description": "SuperFrames Edit \u2014 one skill for the whole AI video pipeline. Build the film as code (HyperFrames HTML or Remotion React), animate motion graphics, cut and mix with FFmpeg, download and analyse references with yt-dlp, verify frame by frame, and export delivery masters. Merges HeyGen HyperFrames, Remotion, FFmpeg and yt-dlp into one contract.",
+  "version": "1.0.0",
   "author": {
-    "name": "HeyGen",
-    "email": "hyperframes@heygen.com",
-    "url": "https://hyperframes.heygen.com"
+    "name": "jamescai-md",
+    "url": "https://github.com/jamescai-md/superframes-edit"
   },
-  "homepage": "https://hyperframes.heygen.com",
-  "repository": "https://github.com/heygen-com/hyperframes",
-  "license": "Apache-2.0"
+  "homepage": "https://github.com/jamescai-md/superframes-edit",
+  "repository": "https://github.com/jamescai-md/superframes-edit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "video",
+    "motion-graphics",
+    "hyperframes",
+    "remotion",
+    "ffmpeg",
+    "yt-dlp",
+    "agent-skill",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "opencode"
+  ],
+  "skills": "./skills/"
 }

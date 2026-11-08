@@ -1,0 +1,19 @@
+name: skill-lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify skill frontmatter, links, and budgets
+        run: node scripts/superframes-verify/verify-skills.mjs
+      - name: Verify no secrets or build output committed
+        run: node scripts/superframes-verify/check-clean.mjs

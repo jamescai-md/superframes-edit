@@ -1,5 +1,10 @@
 # Credits
 
+> This file is inherited from the HyperFrames upstream this repository is forked from, and is kept
+> for attribution. For the merged-project provenance — what came from HyperFrames, Remotion, FFmpeg,
+> yt-dlp and the agent-method skills, with licences — read
+> [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
 ## Prior art
 
 HyperFrames was inspired by prior work in the browser-based video rendering space.

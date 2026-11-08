@@ -1,41 +1,57 @@
 {
-  "source": "heygen-com/hyperframes",
+  "source": "jamescai-md/superframes-edit",
   "skills": {
     "figma": {
-      "hash": "ce769362c969a9f6",
+      "hash": "5cd575fbe12456c1",
       "files": 2
     },
     "hyperframes": {
-      "hash": "17e33f68596da873",
+      "hash": "2c6da298d999e2d5",
       "files": 78
     },
     "hyperframes-cli": {
-      "hash": "adcd30f21c700eba",
+      "hash": "fee2a5f60afa214e",
       "files": 13
     },
     "hyperframes-registry": {
-      "hash": "a032ccc5c7948ac2",
+      "hash": "fa0cfa0d9fe611ff",
       "files": 13
     },
     "media-use": {
-      "hash": "d28e54e57fce04d9",
+      "hash": "e719e50e3694ca45",
       "files": 122
     },
     "remotion-to-hyperframes": {
-      "hash": "73b82d19db2ed8c9",
+      "hash": "69ae8637b2be14d8",
       "files": 76
     },
     "reverse-any-video": {
-      "hash": "f94599be483b10df",
+      "hash": "bf0458aff9bc1fd6",
       "files": 5
     },
     "slideshow": {
-      "hash": "1ab359d60230a336",
+      "hash": "08570a5fd1c6106f",
       "files": 2
     },
     "style-sampling": {
-      "hash": "278b90cfc24dcfa1",
+      "hash": "446641db535087ee",
       "files": 2
+    },
+    "superframes-acquire": {
+      "hash": "567bbfa4a13f01a7",
+      "files": 4
+    },
+    "superframes-build": {
+      "hash": "4360e1b40fab0dbe",
+      "files": 77
+    },
+    "superframes-cut": {
+      "hash": "d9354026ce289844",
+      "files": 3
+    },
+    "superframes-edit": {
+      "hash": "bfb33dc76ba3a7e3",
+      "files": 12
     }
   }
 }
